@@ -82,7 +82,7 @@ controller_inventories:
     organization: Default
 
 controller_hosts:
-  - name: "{{ lookup('ansible.builtin.env', 'CONTROLLER_HOST') }}"
+  - name: "{{ lookup('ansible.builtin.env', 'CONTROLLER_HOST') | urlsplit('hostname') }}"
     inventory: '{{ this_demo_inventory }}'
 # controller_inventory_sources:
 #   - name: '{{ this_demo_inventory }} Repo'
