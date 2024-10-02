@@ -1,14 +1,15 @@
 ---
 controller_components:
   # - credential_types
-  # - credentials
+  - credentials
   - execution_environments
   - projects
   - inventories
+  - hosts
   # - inventory_sources
   # - job_templates
 
-# aap_cred: 'AAP API Cred'
+aap_cred: 'AAP API Cred'
 # ssh_cred: 'SSH Cred'
 # vcenter_cred: 'vCenter Cred'
 # quay_cred: 'Quay'
@@ -23,16 +24,16 @@ this_demo_inventory: AAP Autoload
 this_demo_project: AAP Autoload
 this_demo_project_repo: https://github.com/brianaddicks/aap-autoload.git
 
-# controller_credentials:
-#   - name: '{{ aap_cred }}'
-#     description: '{{ aap_cred }}'
-#     organization: Default
-#     credential_type: Red Hat Ansible Automation Platform
-#     inputs:
-#       host: "{{ lookup('ansible.builtin.env', 'CONTROLLER_HOST') }}"
-#       password: "{{ lookup('ansible.builtin.env', 'CONTROLLER_PASSWORD') }}"
-#       username: "{{ lookup('ansible.builtin.env', 'CONTROLLER_USERNAME') }}"
-#       verify_ssl: "{{ lookup('ansible.builtin.env', 'CONTROLLER_VALIDATE_CERTS') | ansible.builtin.bool }}"
+controller_credentials:
+  - name: '{{ aap_cred }}'
+    description: '{{ aap_cred }}'
+    organization: Default
+    credential_type: Red Hat Ansible Automation Platform
+    inputs:
+      host: "{{ lookup('ansible.builtin.env', 'CONTROLLER_HOST') }}"
+      password: "{{ lookup('ansible.builtin.env', 'CONTROLLER_PASSWORD') }}"
+      username: "{{ lookup('ansible.builtin.env', 'CONTROLLER_USERNAME') }}"
+      verify_ssl: "{{ lookup('ansible.builtin.env', 'CONTROLLER_VALIDATE_CERTS') | ansible.builtin.bool }}"
 #   - name: '{{ vcenter_cred }}'
 #     description: '{{ vcenter_cred }}'
 #     organization: Default
@@ -79,6 +80,10 @@ controller_inventories:
   - name: '{{ this_demo_inventory }}'
     description: '{{ this_demo_inventory }}'
     organization: Default
+
+controller_hosts:
+  - name: AAP
+    inventory: "{{ lookup('ansible.builtin.env', 'CONTROLLER_HOST') }}"
 # controller_inventory_sources:
 #   - name: '{{ this_demo_inventory }} Repo'
 #     source: scm
